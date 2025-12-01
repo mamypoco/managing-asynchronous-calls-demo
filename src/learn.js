@@ -62,19 +62,23 @@ const findLatitudeAndLongitude = (query) => {
 
 // findLatitudeAndLongitude('Christ the Redeemer');
 
+
+////// Run in a loop to apply sevenWonders object /////
+// You can use delay at the start or the end of the loop
 const RATE_LIMIT_DELAY = 1200; // ms
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 const applyCoordinates = async () => {
   for (const [wonderName, coordinates] of Object.entries(sevenWonders)) {
-    await delay(RATE_LIMIT_DELAY);
-    const result = await findLatitudeAndLongitude(wonderName);
     
+    const result = await findLatitudeAndLongitude(wonderName);
     coordinates.latitude = result.latitude;
     coordinates.longitude = result.longitude;
 
-    console.log(sevenWonders);
+    await delay(RATE_LIMIT_DELAY); // delay between each API call (1.2s)
+    // console.log(sevenWonders);
   };
+  console.log(sevenWonders);
 };
 
 applyCoordinates();
